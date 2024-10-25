@@ -7,3 +7,5 @@ byte_data = response.content
 print(f"Byte string: {byte_data[:1000]}")
 
 print("Added docker credentials")
+
+input("\nType 'exit' to exit: ")

@@ -1,20 +1,18 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use a Python base image
+FROM python:3.9
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the requirements file (if any) to the container at /app
-COPY requirements.txt .
-
-# Install any dependencies specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code to the working directory
+# Copy the contents of your repo to the container
 COPY . .
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
+# Install dependencies (Jupyter Notebook and any dependencies in requirements.txt)
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install jupyter
 
-# Run the application
-CMD ["python", "main.py"]
+# Expose the Jupyter Notebook port
+EXPOSE 8888
+
+# Run Jupyter Notebook server
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
